@@ -10,12 +10,19 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
 })
 
+// io.on('connection', socket => {
+//     console.log('User Connected');
+//     socket.emit('message', {abe: 'Hey there!'})
+//     socket.on('another event', data => {
+//         console.log(data);
+//     })
+// })
 io.on('connection', socket => {
     console.log('User Connected');
-    socket.emit('message', {abe: 'Hey there!'})
-    socket.on('another event', data => {
-        console.log(data);
-    })
+   socket.on('message', msg => {
+       console.log(`Message: ${msg}`);
+       io.emit('message', msg)
+   })
 })
 
 server.listen(PORT, () => {

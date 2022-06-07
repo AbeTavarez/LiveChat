@@ -17,6 +17,9 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
+    <style>
+        
+    </style>
     <title>LiveChat</title>
   </head>
   <body>
@@ -48,7 +51,8 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- <script>
       // THIS IS THE CLIENT
       const socket = io.connect("http://localhost:5000"); // we make a connection to the server
       // went we get a message from another user we send one back
@@ -56,6 +60,21 @@
         console.log(data);
         socket.emit("another event", { mel: "Hey bro" });
       });
+    </script> -->
+    <script>
+        //REFACTORED
+      const socket = io(); // we make a connection to the server
+      // went we get a message from another user we send one back
+     
+       $('form').submit(() => {
+           socket.emit('message', $('#m').val())
+           $('#m').val('')
+           return false;
+       })
+
+      socket.on('message', msg => {
+          $('#messages').append($('<li>').text(msg))
+      })
     </script>
   </body>
 </html>
